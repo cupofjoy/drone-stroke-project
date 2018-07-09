@@ -1,4 +1,5 @@
 import React from 'react'
+import Map from './Map'
 
 class DroneDetails extends React.Component {
   changeDateFormat = (date) => {
@@ -15,8 +16,7 @@ class DroneDetails extends React.Component {
   renderDetails = () => {
     let drone = this.props.drone
     console.log(this.props.drone)
-    let url = `https://maps.googleapis.com/maps/api/staticmap?center=${drone.lat},${drone.lon}&markers=color:blue%7Clabel:S%${drone.lat},${drone.lon}&zoom=12&size=600x300&maptype=roadmap&key=AIzaSyAM6nPv-8KXjv2kWD486CXAqA8p6DC3ZJY`
-    console.log(drone.bij_link)
+
 
     if (drone.country !== undefined) {
       return (
@@ -29,7 +29,6 @@ class DroneDetails extends React.Component {
           {drone.civilians !== "" ? <p>Civilian Deaths: {drone.civilians}</p> : null}
           {drone.children !== "" ? <p>Children Deaths: {drone.children}</p> : null}
           {drone.bij_link !== "" ? <div><a href={drone.bij_link} alt="link"> Link </a><br/><br/></div> : null}
-          {drone.lon !== "" ? <img src={url} width="450" height="300" onClick="swap();" id="my-image-id" /> : null}
         </div>
       )
     }
@@ -39,6 +38,7 @@ class DroneDetails extends React.Component {
     return (
       <div>
         {this.renderDetails()}
+        <Map lat={this.props.drone.lat} lon={this.props.drone.lon} />
       </div>
 
     )
