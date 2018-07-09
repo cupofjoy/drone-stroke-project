@@ -35,6 +35,21 @@
   width: 70%;
 }
 
+#map {
+  height: 10%;
+}
+
+.drone-details {
+  float: left;
+  width: 500px;
+  padding: 50px;
+}
+
+.drone-form {
+  float: left;
+  padding-top: 50px;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

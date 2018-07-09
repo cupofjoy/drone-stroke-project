@@ -11,7 +11,14 @@ class App extends Component {
 
     this.state = {
       data: [],
-      currentDrone: {}
+      currentDrone: {},
+      newDrone: {
+        country: null,
+        date: null,
+        province: null,
+        narrative: null,
+        deaths: null
+      }
     }
   }
 
@@ -21,14 +28,14 @@ class App extends Component {
     fetch(URL)
       .then(r => r.json())
       // .then(data => {this.pushToDatabase(data)})
-      .then(d => this.setState({data: d}, () => {console.log(this.state.data)}))
+      .then(d => this.setState({data: d.strike}, () => {console.log(this.state.data)}))
   }
 
   pushToDatabase = (data) => {
     const databaseURL = "http://localhost:4000/api/v1/drones"
-    if (data.strike.length > 0) {
+    if (data.length > 0) {
       for (let i = 0; i < 1; i++) {
-        let drone = data.strike[i]
+        let drone = data[i]
         let body = {
           country: drone.country,
           location: drone.town,
@@ -70,6 +77,21 @@ class App extends Component {
     this.setState({currentDrone: droneObj})
   }
 
+  handleFormChange = (event, value) => {
+    this.setState({newDrone: {
+      ...this.state.newDrone,
+      [event.target.name]: value
+    }})
+  }
+
+  handleFormSubmit = (event, value) => {
+    event.preventDefault();
+    this.setState({
+      // data: Object.assign({}, this.state.data, this.state.newDrone)},
+      data: [...this.state.data, this.state.newDrone],
+    }, () => console.log("newState", this.state.data))
+  }
+
   render() {
     return (
       <div className="App">
@@ -80,7 +102,7 @@ class App extends Component {
           <DroneList data={this.state.data} handleClick={this.handleClick}/>
         </div>
         <div className="view-container">
-          <DroneView drone={this.state.currentDrone} />
+          <DroneView drone={this.state.currentDrone} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit}/>
         </div>
       </div>
     );

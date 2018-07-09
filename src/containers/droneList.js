@@ -11,14 +11,14 @@ class DroneList extends React.Component {
   }
 
   mapDroneData = () => {
-    let droneData = this.props.data.strike
+    let droneData = this.props.data
 
     if (droneData !== undefined) {
       return droneData.map((droneObj) => {
         // return <DroneDetails key={droneObj.number} country={droneObj.country} date={droneObj.date} description={droneObj.narrative} onClick={this.props.handleClick}/>
         return (
-          <div key={droneObj.number} onClick={(event) => {this.props.handleClick(event, droneObj)}}>
-            <p>Country: {droneObj.country} <br/> Date: {this.changeDateFormat(droneObj.date)}</p>
+          <div onClick={(event) => {this.props.handleClick(event, droneObj)}}>
+            <p><strong>Country:</strong> {droneObj.country} <br/> <strong>Date:</strong> {this.changeDateFormat(droneObj.date)}</p>
           </div>
         )
       })
