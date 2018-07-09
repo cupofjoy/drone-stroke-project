@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 // import data from './data.js'
 import DroneList from './containers/droneList'
@@ -11,14 +11,18 @@ class App extends Component {
 
     this.state = {
       data: [],
+      filteredData: [],
+      searchTerm: "",
       currentDrone: {},
       newDrone: {
         country: null,
         date: null,
         province: null,
         narrative: null,
-        deaths: null
-      }
+        deaths: null,
+        injuries: null
+      },
+      selectedValue: ""
     }
   }
 
@@ -28,7 +32,7 @@ class App extends Component {
     fetch(URL)
       .then(r => r.json())
       // .then(data => {this.pushToDatabase(data)})
-      .then(d => this.setState({data: d.strike}, () => {console.log(this.state.data)}))
+      .then(d => this.setState({data: d.strike, filteredData: d.strike}))
   }
 
   pushToDatabase = (data) => {
@@ -78,6 +82,7 @@ class App extends Component {
   }
 
   handleFormChange = (event, value) => {
+    console.log(event.target.name)
     this.setState({newDrone: {
       ...this.state.newDrone,
       [event.target.name]: value
@@ -92,18 +97,63 @@ class App extends Component {
     }, () => console.log("newState", this.state.data))
   }
 
+  handleSearchChange = (event) => {
+    let filteredData = this.state.data.filter((drone) => {
+      return drone.country.toLowerCase().includes(event.target.value) || drone.date.toLowerCase().includes(event.target.value)
+    })
+    // console.log(event.target.value)
+
+    this.setState({
+      searchTerm: event.target.value.toLowerCase(),
+      filteredData: filteredData
+    })
+  }
+
+  // filterData =() => {
+  //   this.setState({ filteredData: filteredData})
+  // }
+
+  handleSelectChange = (event) => {
+    let sortTerm = event.target.value.toLowerCase()
+    let sortedData = this.state.data.slice(0)
+    // console.log('sortedData', sortedData)
+    // console.log('term', sortTerm);
+
+    if (sortTerm === 'country') {
+      sortedData.sort(function(a, b) {
+        return a.country - b.country
+      })
+      this.setState({filteredData: sortedData}, () => {console.log('sortedData', sortedData)})
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title"></h1>
+          <h1 className="App-title">Drone Strikes</h1>
         </header>
-        <div className="list-container">
-          <DroneList data={this.state.data} handleClick={this.handleClick}/>
-        </div>
-        <div className="view-container">
-          <DroneView drone={this.state.currentDrone} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit}/>
-        </div>
+        {
+          this.state.data.length > 0 ?
+            <div className="list-container">
+              <DroneList
+                searchTerm={this.state.searchTerm}
+                data={this.state.filteredData}
+                handleClick={this.handleClick}
+                handleChange={this.handleSearchChange}
+                selectedValue={this.state.selectedValue}
+                handleSelectChange={this.handleSelectChange}
+              />
+            </div>
+          : null
+        }
+        {
+          this.state.currentDrone.country !== undefined ?
+            <div className="view-container">
+              <DroneView drone={this.state.currentDrone} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} handleSelectChange={this.handleSelectChange}/>
+            </div>
+          : null
+        }
       </div>
     );
   }

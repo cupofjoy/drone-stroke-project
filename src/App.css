@@ -15,7 +15,7 @@
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .App-intro {
@@ -24,19 +24,27 @@
 
 .list-container {
   text-align: left;
-  width: 30%;
+  width: 20%;
   float: left;
   overflow-y: scroll;
-  height: 500px;
+  height: 850px;
+  border-radius: 25px;
+  border-style: ridge;
+  margin-left: 10px;
+  padding-left: 30px;
 }
 
 .view-container {
   float: left;
-  width: 70%;
+  width: 75%;
+  height: 850px;
+  border-radius: 25px;
+  border-style: ridge;
+  margin-left: 10px;
 }
 
-#map {
-  height: 10%;
+.map {
+  padding: 50px;
 }
 
 .drone-details {
@@ -50,8 +58,31 @@
   padding-top: 50px;
 }
 
+body {
+  padding-top: 10px;
+  font-family: 'Crete Round'
+}
+
+h3 {
+  font-family: 'Cinzel'
+}
+
+h1 {
+  font-family: 'Cinzel'
+}
+
+header {
+  font-family: 'Cinzel'
+}
+
+strong {
+   font-family: 'Cinzel'
+ }
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+@import url('https://fonts.googleapis.com/css?family=Crete+Round');
+@import url('https://fonts.googleapis.com/css?family=Cinzel');

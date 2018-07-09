@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import DroneDetails from '../components/droneDetails'
 import DroneForm from '../components/droneForm'
 import '../App.css'
 
-export default class DroneView extends Component {
-  render() {
-    return (
-      <div>
-        <div className="drone-details">
-          <DroneDetails drone={this.props.drone}/>
-        </div>
-        <div className="drone-form">
-          <DroneForm handleChange={this.props.handleFormChange} handleSubmit={this.props.handleFormSubmit}/>
-        </div>
+const DroneView = (props) => {
+  return (
+    <div>
+      <div className="drone-details">
+        <DroneDetails drone={props.drone}/>
       </div>
-    )
-  }
+      <div className="drone-form">
+        <DroneForm handleChange={props.handleFormChange} handleSubmit={props.handleFormSubmit}/>
+      </div>
+    </div>
+  )
 }
+
+export default DroneView
