@@ -14,12 +14,12 @@ class DroneList extends React.Component {
 
   mapDroneData = () => {
     let droneData = this.props.data
-
+    // console.log(droneData);
     if (droneData !== undefined) {
       return droneData.map((droneObj) => {
         return (
           <div onClick={(event) => {this.props.handleClick(event, droneObj)}}>
-            <p><strong>Country:</strong> {droneObj.country} <br/> <strong>Date:</strong> {this.changeDateFormat(droneObj.date)}</p>
+            <p><strong>Country:</strong> {droneObj.country} | <strong>Date:</strong> {this.changeDateFormat(droneObj.date)}</p>
           </div>
         )
       })
@@ -31,9 +31,15 @@ class DroneList extends React.Component {
     return (
       <div className="list">
         <h3>Drone Strike List</h3>
-        <form><input type="text" value={this.props.searchTerm} placeholder="Search by Country or Year" onChange={(event) => {this.props.handleChange(event)}}></input></form>
+        <form>
+          <input
+            type="text"
+            value={this.props.searchTerm}
+            placeholder="Search by Country or Year"
+            onChange={(event) => {this.props.handleChange(event)}} />
+        </form>
         <select
-          value={(event) => {this.props.selectedValue(event)}}
+          value={""}
           onChange={(event) => {this.props.handleSelectChange(event)}}
         >
           <option value="date">Date</option>

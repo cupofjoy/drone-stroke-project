@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
-// import data from './data.js'
+
 import DroneList from './containers/droneList'
 import DroneView from './containers/droneView'
 
@@ -22,24 +21,37 @@ class App extends Component {
         deaths: null,
         injuries: null
       },
-      selectedValue: ""
     }
   }
 
   componentDidMount() {
     const URL = 'https://api.dronestre.am/data'
+    const databaseURL = "http://localhost:4000/api/v1/drones"
 
-    fetch(URL)
+    let apiRequest1 = fetch(URL)
       .then(r => r.json())
-      // .then(data => {this.pushToDatabase(data)})
-      .then(d => this.setState({data: d.strike, filteredData: d.strike}))
+
+    let apiRequest2 = fetch(databaseURL)
+      .then(r => r.json())
+
+    let combinedData = {"apiRequest1":{}, "apiRequest2":{}};
+
+    Promise.all([apiRequest1,apiRequest2]).then((values) => {
+      combinedData["apiRequest1"] = values[0];
+      combinedData["apiRequest2"] = values[1];
+      let dataBody = [...combinedData.apiRequest2,  ...combinedData.apiRequest1.strike]
+      // console.log("body", dataBody);
+      this.setState({data: dataBody, filteredData: dataBody}, () => {console.log("state", this.state.data)})
+    })
   }
 
   pushToDatabase = (data) => {
     const databaseURL = "http://localhost:4000/api/v1/drones"
-    if (data.length > 0) {
-      for (let i = 0; i < 1; i++) {
-        let drone = data[i]
+    console.log(data.strike)
+    let droneArr = data.strike
+    if (droneArr.length > 0) {
+      for (let i = 0; i < droneArr.length; i++) {
+        let drone = droneArr[i]
         let body = {
           country: drone.country,
           location: drone.town,
@@ -82,7 +94,7 @@ class App extends Component {
   }
 
   handleFormChange = (event, value) => {
-    console.log(event.target.name)
+    // console.log("input", event.target.value)
     this.setState({newDrone: {
       ...this.state.newDrone,
       [event.target.name]: value
@@ -90,28 +102,46 @@ class App extends Component {
   }
 
   handleFormSubmit = (event, value) => {
-    event.preventDefault();
+    // event.preventDefault();
+    this.postData();
+  }
+
+  postData = () => {
+    // console.log("newDrone", this.state.newDrone)
+    let databaseURL = "http://localhost:4000/api/v1/drones"
+    let body = {
+      country: this.state.newDrone.country,
+      date: this.state.newDrone.date,
+      civilians: this.state.newDrone.deaths,
+      injuries: this.state.newDrone.injuries,
+      narrative: this.state.newDrone.narrative,
+      location: this.state.newDrone.province
+    }
+
     this.setState({
-      // data: Object.assign({}, this.state.data, this.state.newDrone)},
-      data: [...this.state.data, this.state.newDrone],
-    }, () => console.log("newState", this.state.data))
+      data: [body, ...this.state.data]
+    })
+
+    // console.log("body", body)
+    let config = {
+      body: JSON.stringify(body),
+      headers: {"Content-Type": "application/json"},
+      method: "POST"
+    }
+
+    fetch(databaseURL, config).then(r => r.json())
   }
 
   handleSearchChange = (event) => {
     let filteredData = this.state.data.filter((drone) => {
       return drone.country.toLowerCase().includes(event.target.value) || drone.date.toLowerCase().includes(event.target.value)
     })
-    // console.log(event.target.value)
 
     this.setState({
       searchTerm: event.target.value.toLowerCase(),
       filteredData: filteredData
     })
   }
-
-  // filterData =() => {
-  //   this.setState({ filteredData: filteredData})
-  // }
 
   handleSelectChange = (event) => {
     let sortTerm = event.target.value.toLowerCase()
@@ -123,7 +153,7 @@ class App extends Component {
       sortedData.sort(function(a, b) {
         return a.country - b.country
       })
-      this.setState({filteredData: sortedData}, () => {console.log('sortedData', sortedData)})
+      this.setState({filteredData: sortedData})
     }
   }
 
@@ -150,7 +180,12 @@ class App extends Component {
         {
           this.state.currentDrone.country !== undefined ?
             <div className="view-container">
-              <DroneView drone={this.state.currentDrone} handleFormChange={this.handleFormChange} handleFormSubmit={this.handleFormSubmit} handleSelectChange={this.handleSelectChange}/>
+              <DroneView
+                drone={this.state.currentDrone}
+                handleFormChange={this.handleFormChange}
+                handleFormSubmit={this.handleFormSubmit}
+                handleSelectChange={this.handleSelectChange}
+              />
             </div>
           : null
         }

@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 50px;
   padding: 20px;
   color: white;
 }
@@ -27,35 +27,39 @@
   width: 20%;
   float: left;
   overflow-y: scroll;
-  height: 850px;
+  height: 750px;
   border-radius: 25px;
   border-style: ridge;
   margin-left: 10px;
   padding-left: 30px;
+  background-color: lightgrey;
 }
 
 .view-container {
   float: left;
   width: 75%;
-  height: 850px;
+  height: 750px;
   border-radius: 25px;
   border-style: ridge;
   margin-left: 10px;
 }
 
 .map {
-  padding: 50px;
+  padding-left: 50px;
+  margin-left: 50px;
 }
 
 .drone-details {
   float: left;
   width: 500px;
-  padding: 50px;
+  padding-top: 5px;
+  margin-left: 10px;
 }
 
 .drone-form {
   float: left;
-  padding-top: 50px;
+  padding-top: 5px;
+  margin-left: 40px;
 }
 
 body {

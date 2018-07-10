@@ -1,5 +1,6 @@
 import React from 'react'
 import Map from './Map'
+import '../App.css'
 
 class DroneDetails extends React.Component {
   changeDateFormat = (date) => {
@@ -21,8 +22,7 @@ class DroneDetails extends React.Component {
       return (
         <div>
           <h1>Drone Strike Details</h1>
-          <h3>Country: {drone.country}</h3>
-          <p><strong>Date:</strong> {this.changeDateFormat(drone.date)}</p>
+            <h3>Country: {drone.country} | <strong>Date:</strong> {this.changeDateFormat(drone.date)} </h3>
           {drone.location !== "" ? <p><strong>Province:</strong> {drone.location}</p> : null}
           <p><strong>Narrative: </strong>{drone.narrative}</p>
           {drone.deaths !== "" ? <p><strong>Deaths:</strong> {drone.deaths}</p> : null}
