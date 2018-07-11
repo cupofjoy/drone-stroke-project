@@ -10,7 +10,11 @@ const DroneView = (props) => {
         <DroneDetails drone={props.drone}/>
       </div>
       <div className="drone-form">
-        <DroneForm handleChange={props.handleFormChange} handleSubmit={props.handleFormSubmit}/>
+        <DroneForm
+          newDrone={props.newDrone}
+          handleChange={props.handleFormChange}
+          handleSubmit={props.handleFormSubmit}
+        />
       </div>
     </div>
   )

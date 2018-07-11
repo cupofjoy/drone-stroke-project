@@ -94,7 +94,7 @@ class App extends Component {
   }
 
   handleFormChange = (event, value) => {
-    // console.log("input", event.target.value)
+    console.log("input", event.target.value)
     this.setState({newDrone: {
       ...this.state.newDrone,
       [event.target.name]: value
@@ -102,34 +102,26 @@ class App extends Component {
   }
 
   handleFormSubmit = (event, value) => {
-    // event.preventDefault();
+    event.preventDefault();
     this.postData();
   }
 
   postData = () => {
     // console.log("newDrone", this.state.newDrone)
     let databaseURL = "http://localhost:4000/api/v1/drones"
-    let body = {
-      country: this.state.newDrone.country,
-      date: this.state.newDrone.date,
-      civilians: this.state.newDrone.deaths,
-      injuries: this.state.newDrone.injuries,
-      narrative: this.state.newDrone.narrative,
-      location: this.state.newDrone.province
-    }
 
     this.setState({
-      data: [body, ...this.state.data]
+      data: [this.state.newDrone, ...this.state.data]
     })
 
     // console.log("body", body)
     let config = {
-      body: JSON.stringify(body),
+      body: JSON.stringify(this.state.newDrone),
       headers: {"Content-Type": "application/json"},
       method: "POST"
     }
 
-    fetch(databaseURL, config).then(r => r.json())
+    fetch(databaseURL, config).then(r => r.json()).then(this.componentDidMount())
   }
 
   handleSearchChange = (event) => {
@@ -182,6 +174,7 @@ class App extends Component {
             <div className="view-container">
               <DroneView
                 drone={this.state.currentDrone}
+                newDrone={this.state.newDrone}
                 handleFormChange={this.handleFormChange}
                 handleFormSubmit={this.handleFormSubmit}
                 handleSelectChange={this.handleSelectChange}
