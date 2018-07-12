@@ -1,26 +1,15 @@
 import React from 'react'
 import '../App.css'
+import DroneListItem from '../components/droneListItem'
 
 class DroneList extends React.Component {
 
-  changeDateFormat = (date) => {
-    let dateobj = date.split('-')
-    let y = dateobj[0]
-    let m = dateobj[1]
-    let d = dateobj[2].slice(0,2)
-    let datestr = m +'.'+ d +'.'+y
-    return datestr
-  }
-
   mapDroneData = () => {
     let droneData = this.props.data
-    // console.log(droneData);
     if (droneData !== undefined) {
       return droneData.map((droneObj) => {
         return (
-          <div onClick={(event) => {this.props.handleClick(event, droneObj)}}>
-            <p><strong>Country:</strong> {droneObj.country} | <strong>Date:</strong> {this.changeDateFormat(droneObj.date)}</p>
-          </div>
+          <DroneListItem drone={droneObj} handleClick={this.props.handleClick}/>
         )
       })
     }
@@ -30,15 +19,15 @@ class DroneList extends React.Component {
   render() {
     return (
       <div className="list">
-        <h3>Drone Strike List</h3>
-        <form>
+        <h3 className="drone-strike-list-title">   Drone Strike List  </h3>
+        <form className="search">
           <input
             type="text"
             value={this.props.searchTerm}
-            placeholder="Search by Country or Year"
+            placeholder="Search Country/Year"
             onChange={(event) => {this.props.handleChange(event)}} />
         </form>
-        <select
+        <select className="sort"
           value={this.props.dropDownValue}
           onChange={(event) => {this.props.handleSelectChange(event)}}
         >

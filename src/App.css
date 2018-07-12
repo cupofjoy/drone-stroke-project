@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: WhiteSmoke;
 }
 
 .App-logo {
@@ -24,42 +25,108 @@
 
 .list-container {
   text-align: left;
-  width: 20%;
+  width: 17%;
   float: left;
   overflow-y: scroll;
-  height: 750px;
-  border-radius: 25px;
+  height: 46em;
+  border-radius: 1.5em;
   border-style: ridge;
-  margin-left: 10px;
-  padding-left: 30px;
-  background-color: lightgrey;
+  margin-left: 1.5em;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  margin-top: 1.2em;
+  background-color: WhiteSmoke;
 }
 
 .view-container {
   float: left;
   width: 75%;
-  height: 750px;
-  border-radius: 25px;
+  height: 46em;
+  border-radius: 1.5em;
   border-style: ridge;
-  margin-left: 10px;
+  margin-left: 1.6em;
+  margin-top:1.2em;
+  background-color: WhiteSmoke;
 }
 
 .map {
-  padding-left: 50px;
-  margin-left: 50px;
+  padding-left: 3em;
+  margin-left: 3em;
 }
 
 .drone-details {
   float: left;
-  width: 500px;
-  padding-top: 5px;
-  margin-left: 10px;
+  width: 30em;
+  padding-top: .3em;
+  margin-left: 3em;
 }
 
 .drone-form {
   float: left;
-  padding-top: 5px;
-  margin-left: 40px;
+  padding-top: .3em;
+  margin-left: 8em;
+}
+
+.droneListItem {
+  font-size: .8em;
+  border-bottom: 2px;
+  border-bottom-style: ridge;
+  border-bottom-color: white;
+}
+
+.drone-strike-list-title {
+  margin-left: 2em;
+}
+
+.sort {
+  margin-left: 5em;
+}
+
+.search {
+  margin-left: 3em;
+}
+
+input {
+  border: none;
+  border-bottom: .1em ridge grey;
+}
+
+/* input[type=text] {
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+} */
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+select {
+    width: 10em;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+}
+
+input[type=button] {
+    background-color: white;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 body {
@@ -81,6 +148,10 @@ header {
 
 strong {
    font-family: 'Cinzel'
+ }
+
+ .deaths{
+   display: inline;
  }
 
 

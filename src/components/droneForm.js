@@ -7,40 +7,40 @@ const DroneForm = (props) => {
       onSubmit={(event) => {props.handleSubmit(event, event.target.value)}}
     >
       <h1>Add New Info</h1>
-      <p>Country:
+      <p>Country:<br/>
         <input
           type="text"
           value={props.newDrone.country}
           name="country"
           autoComplete='country-name'
         ></input><br/></p>
-      <p>Date:
+      <p>Date:<br/>
         <input
           type="date"
           value={props.newDrone.date}
           name="date"
         /><br/></p>
-      <p>Province:
+      <p>Province:<br/>
         <input
           type="text"
           value={props.newDrone.province}
           name="province"
         /><br/>
       </p>
-      <p>Deaths:
+      <p>Deaths:<br/>
         <input
           type="text"
           value={props.newDrone.deaths}
           name="deaths"
         /><br /></p>
-      <p>Injuries:
+      <p>Injuries:<br/>
         <input
           type="text"
           value={props.newDrone.injuries}
           name="injuries"
         /><br />
       </p>
-      <p>Narrative:
+      <p>Narrative:<br/>
         <label><textarea
           value={props.newDrone.narratice}
           name="narrative"></textarea>

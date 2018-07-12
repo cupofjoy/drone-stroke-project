@@ -3,6 +3,7 @@ import './App.css';
 
 import DroneList from './containers/droneList'
 import DroneView from './containers/droneView'
+// import { Link, Route, Switch, Redirect } from 'react-router-dom'
 
 class App extends Component {
   constructor() {
@@ -15,12 +16,12 @@ class App extends Component {
       currentDrone: {},
       dropDownValue: "",
       newDrone: {
-        country: null,
-        date: null,
-        province: null,
-        narrative: null,
-        deaths: null,
-        injuries: null
+        country: "",
+        date: "",
+        province: "",
+        narrative: "",
+        deaths: "",
+        injuries: ""
       },
     }
   }
@@ -42,7 +43,7 @@ class App extends Component {
       combinedData["apiRequest2"] = values[1];
       let dataBody = [...combinedData.apiRequest2,  ...combinedData.apiRequest1.strike]
       // console.log("body", dataBody);
-      this.setState({data: dataBody, filteredData: dataBody}, () => {console.log("state", this.state.data)})
+      this.setState({data: dataBody, filteredData: dataBody})
     })
   }
 
@@ -53,26 +54,6 @@ class App extends Component {
     if (droneArr.length > 0) {
       for (let i = 0; i < droneArr.length; i++) {
         let drone = droneArr[i]
-        let body = {
-          country: drone.country,
-          location: drone.town,
-          strike_date: drone.date,
-          narrative: drone.narrative,
-          province: drone.location,
-          total_deaths: drone.deaths,
-          civilian_deaths: drone.civilians,
-          child_deaths: drone.children,
-          injuries: drone.injuries,
-          twitter_id: drone.tweet_id,
-          bureau_id: drone.bureau_id,
-          bureau_summary: drone.bij_summary_short,
-          link: drone.bij_link,
-          target: drone.target,
-          longitude: drone.lon,
-          latitude: drone.lat,
-          names: drone.names
-        }
-        console.log("body", body)
 
         let config =  {
           method: 'POST',
@@ -80,7 +61,7 @@ class App extends Component {
             'Content-Type':'application/json',
             'Data-type':'application/json',
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(drone)
         }
 
         fetch(databaseURL, config)
@@ -91,6 +72,7 @@ class App extends Component {
   }
 
   handleClick = (event, droneObj) => {
+    console.log("droneObj", droneObj);
     this.setState({currentDrone: droneObj})
   }
 
@@ -183,34 +165,36 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Drone Strikes</h1>
         </header>
-        {
-          this.state.data.length > 0 ?
-            <div className="list-container">
-              <DroneList
-                searchTerm={this.state.searchTerm}
-                dropDownValue={this.state.dropDownValue}
-                data={this.state.filteredData}
-                handleClick={this.handleClick}
-                handleChange={this.handleSearchChange}
-                selectedValue={this.state.selectedValue}
-                handleSelectChange={this.handleSelectChange}
-              />
-            </div>
-          : null
-        }
-        {
-          this.state.currentDrone.country !== undefined ?
-            <div className="view-container">
-              <DroneView
-                drone={this.state.currentDrone}
-                newDrone={this.state.newDrone}
-                handleFormChange={this.handleFormChange}
-                handleFormSubmit={this.handleFormSubmit}
-                handleSelectChange={this.handleSelectChange}
-              />
-            </div>
-          : null
-        }
+        <div className="body">
+          {
+            this.state.data.length > 0 ?
+              <div className="list-container">
+                <DroneList
+                  searchTerm={this.state.searchTerm}
+                  dropDownValue={this.state.dropDownValue}
+                  data={this.state.filteredData}
+                  handleClick={this.handleClick}
+                  handleChange={this.handleSearchChange}
+                  selectedValue={this.state.selectedValue}
+                  handleSelectChange={this.handleSelectChange}
+                />
+              </div>
+            : null
+          }
+          {
+            this.state.currentDrone.country !== undefined ?
+              <div className="view-container">
+                <DroneView
+                  drone={this.state.currentDrone}
+                  newDrone={this.state.newDrone}
+                  handleFormChange={this.handleFormChange}
+                  handleFormSubmit={this.handleFormSubmit}
+                  handleSelectChange={this.handleSelectChange}
+                />
+              </div>
+            : null
+          }
+        </div>
       </div>
     );
   }

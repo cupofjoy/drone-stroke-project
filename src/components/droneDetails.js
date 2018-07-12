@@ -14,6 +14,34 @@ class DroneDetails extends React.Component {
     }
   }
 
+  displayDeathImages = () => {
+       let arr = []
+       let civilianDeaths;
+
+       if(this.props.drone.civilians === "" || this.props.drone.civilians === "Unknown"){
+           civilianDeaths = 0
+       } else {
+           civilianDeaths = parseInt(this.props.drone.civilians)
+       }
+
+
+       for(let i=0; i < parseInt(this.props.drone.deaths); i++){
+         if(civilianDeaths <= i){
+           arr.push(
+             <div className="deaths">
+               <img src={"https://storage.needpix.com/thumbs/user-296686_1280.png"} height="20"/>
+             </div>)
+         } else {
+           arr.push(
+             <div className="deaths">
+               <img src={"https://storage.needpix.com/rsynced_images/buddy-303603_1280.png"} height="20"/>
+             </div>
+          )
+         }
+       }
+       return arr
+   }
+
   renderDetails = () => {
     let drone = this.props.drone
     // console.log("droneDetail", this.props.drone)
@@ -29,6 +57,7 @@ class DroneDetails extends React.Component {
           {drone.injuries !== "" ? <p><strong>Injuries:</strong> {drone.injuries}</p> : null}
           {drone.civilians !== "" ? <p><strong>Civilians:</strong> {drone.civilians}</p> : null}
           {drone.children !== "" ? <p><strong>Children:</strong> {drone.children}</p> : null}
+          {this.displayDeathImages()}
           {drone.bij_link !== "" ? <div><a href={drone.bij_link} alt="link"> Link </a><br/><br/></div> : null}
         </div>
       )
