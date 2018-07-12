@@ -13,6 +13,7 @@ class App extends Component {
       filteredData: [],
       searchTerm: "",
       currentDrone: {},
+      dropDownValue: "",
       newDrone: {
         country: null,
         date: null,
@@ -102,26 +103,22 @@ class App extends Component {
   }
 
   handleFormSubmit = (event, value) => {
-    event.preventDefault();
+    // event.preventDefault();
     this.postData();
   }
 
   postData = () => {
-    // console.log("newDrone", this.state.newDrone)
     let databaseURL = "http://localhost:4000/api/v1/drones"
 
-    this.setState({
-      data: [this.state.newDrone, ...this.state.data]
-    })
-
-    // console.log("body", body)
     let config = {
       body: JSON.stringify(this.state.newDrone),
       headers: {"Content-Type": "application/json"},
       method: "POST"
     }
 
-    fetch(databaseURL, config).then(r => r.json()).then(this.componentDidMount())
+    fetch(databaseURL, config).then(r => r.json()).then(this.setState({
+      data: [this.state.newDrone, ...this.state.data]
+    }))
   }
 
   handleSearchChange = (event) => {
@@ -139,13 +136,44 @@ class App extends Component {
     let sortTerm = event.target.value.toLowerCase()
     let sortedData = this.state.data.slice(0)
     // console.log('sortedData', sortedData)
-    // console.log('term', sortTerm);
+    console.log('term', event.target.value);
+    this.setState({dropDownValue: sortTerm})
 
     if (sortTerm === 'country') {
       sortedData.sort(function(a, b) {
-        return a.country - b.country
+        return a.country.localeCompare(b.country)
       })
       this.setState({filteredData: sortedData})
+    } else if (sortTerm === 'date') {
+      sortedData.sort(function(a, b) {
+        return (a.date.split("-")[0]).localeCompare(b.date.split("-")[0])
+      })
+      this.setState({filteredData: sortedData})
+    } else if (sortTerm === 'deaths') {
+      sortedData.sort(function(a, b) {
+        if (a.deaths.includes("-")) {
+          let newA = a.deaths.split("-")[0]
+          if (b.deaths.includes("-")) {
+            let newB = b.deaths.split("-")[0]
+            return newA.localeCompare(newB)
+          } else {
+            return newA.localeCompare(b.deaths)
+          }
+        } else if (b.deaths.includes("-")) {
+          let newB = b.deaths.split("-")[0]
+          if (a.deaths.includes("-")) {
+            let newA = a.deaths.split("-")[0]
+            return newA.localeCompare(newB)
+          } else {
+            return a.deaths.localeCompare(newB)
+          }
+        } else {
+          return a.deaths.localeCompare(b.deaths)
+        }
+      })
+      this.setState({filteredData: sortedData})
+    } else {
+      this.setState({filteredData: this.state.data})
     }
   }
 
@@ -160,6 +188,7 @@ class App extends Component {
             <div className="list-container">
               <DroneList
                 searchTerm={this.state.searchTerm}
+                dropDownValue={this.state.dropDownValue}
                 data={this.state.filteredData}
                 handleClick={this.handleClick}
                 handleChange={this.handleSearchChange}

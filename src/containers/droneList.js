@@ -39,9 +39,10 @@ class DroneList extends React.Component {
             onChange={(event) => {this.props.handleChange(event)}} />
         </form>
         <select
-          value={""}
+          value={this.props.dropDownValue}
           onChange={(event) => {this.props.handleSelectChange(event)}}
         >
+          <option value="all">All</option>
           <option value="date">Date</option>
           <option value="country">Country</option>
           <option value="deaths">Deaths</option>

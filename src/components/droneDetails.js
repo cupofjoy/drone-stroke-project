@@ -16,7 +16,7 @@ class DroneDetails extends React.Component {
 
   renderDetails = () => {
     let drone = this.props.drone
-    console.log("droneDetail", this.props.drone)
+    // console.log("droneDetail", this.props.drone)
 
     if (drone.country !== undefined) {
       return (
