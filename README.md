@@ -14,4 +14,4 @@ rails s -p=4000
 ```
 
 ## Example
-![alt text](./public.example.png)
+![alt text]("./public.example.png")
