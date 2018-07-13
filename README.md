@@ -14,4 +14,4 @@ rails s -p=4000
 ```
 
 ## Example
-![alt text](./public.example.png "Example of the list feature and details")
+![Screenshot](https://github.com/cupofjoy/drone-stroke-project/blob/master/public/example.png)
