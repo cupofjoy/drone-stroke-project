@@ -6,7 +6,7 @@ const DroneForm = (props) => {
       onChange={(event) => {props.handleChange(event, event.target.value)}}
       onSubmit={(event) => {props.handleSubmit(event, event.target.value)}}
     >
-      <h1>Add New Info</h1>
+      <h1>Report New Strike</h1>
       <p>Country:<br/>
         <input
           type="text"
