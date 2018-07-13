@@ -35,6 +35,7 @@ class DroneList extends React.Component {
           <option value="date">Date</option>
           <option value="country">Country</option>
           <option value="deaths">Deaths</option>
+          <option value="accuracy">Accuracy</option>
         </select>
         {this.mapDroneData()}
       </div>

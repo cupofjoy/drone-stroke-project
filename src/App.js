@@ -156,7 +156,7 @@ class App extends Component {
       this.setState({filteredData: sortedData})
     } else {
       this.setState({filteredData: this.state.data})
-    }
+    } 
   }
 
   render() {
